@@ -26,7 +26,7 @@ jobs:
         run: |
            echo "Repository: ${{ github.repository }}"
            echo "Ref: ${{ github.ref }}"
-           echo "Ref: ${{ github.ref }}"
+           
       
       - name: Checkout Code
         uses: actions/checkout@v4
