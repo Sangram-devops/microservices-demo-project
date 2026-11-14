@@ -1,23 +1,53 @@
-name: My own CI/CD pipeline 
+name: Build and push Docker image to AWS ECR
 
 on:
   push:
     branches:
-        -main
+      -main
+    path:
+      - 'src/frontend/**'
+      - '.github/workflows/my-cicd.yaml'
   workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ap-south-1
+  ECR_REPOSITORY: online-boutique-frontend
 jobs:
-  test:
-    name: Test Github Actions
+  build-and-test:
+    name:  Build and Push
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
       
-      - name: Verify Repository
-        run: |
-          echo "Github Actions Started"
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Branch: $GITHUB_REF_NAME"
-          echo "CI/CD Pipeline is Working"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with: 
+         role-to-assume: arn:aws:iam::211579682606:role/GitHubAction-ECR-Role
+         aws-region: ${{env.AWS_REGION}}
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and Push image
+        env:
+          ECR_REPOSITORY: ${{steps.login.outputs.registry}}
+          IMAGE_TAG: ${{github.sha}}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          -f src/frontend/Dockerfile \
+          src/frontend
+
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+
+          docker tag \
+            $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            $ECR_REGISTRY/$ECR_REPOSITORY: latest
+
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY: latest
