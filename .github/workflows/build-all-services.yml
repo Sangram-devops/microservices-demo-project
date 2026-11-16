@@ -1,4 +1,4 @@
-name: Build and Push All Microservices
+name: Build and Push All Microservices To ECR
 
 on:
   workflow_dispatch:
