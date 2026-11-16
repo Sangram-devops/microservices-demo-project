@@ -1,4 +1,4 @@
-name: Build and Push All Microservices To ECR
+name: Build and Push All Microservices
 
 on:
   workflow_dispatch:
@@ -28,76 +28,68 @@ jobs:
       # ADSERVICE
       - name: Build and Push Adservice
         run: |
-          docker build -f src/adservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-adservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-adservice:latest src/adservice
           docker push $ECR_REGISTRY/online-boutique-adservice:latest
 
       # CARTSERVICE
       - name: Build and Push Cartservice
         run: |
-          docker build -f src/cartservice/src/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-cartservice:latest .
+          docker build \
+            -f src/cartservice/src/Dockerfile \
+            -t $ECR_REGISTRY/online-boutique-cartservice:latest \
+            src/cartservice/src
           docker push $ECR_REGISTRY/online-boutique-cartservice:latest
 
       # CHECKOUTSERVICE
       - name: Build and Push Checkoutservice
         run: |
-          docker build -f src/checkoutservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-checkoutservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-checkoutservice:latest src/checkoutservice
           docker push $ECR_REGISTRY/online-boutique-checkoutservice:latest
 
       # CURRENCYSERVICE
       - name: Build and Push Currencyservice
         run: |
-          docker build -f src/currencyservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-currencyservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-currencyservice:latest src/currencyservice
           docker push $ECR_REGISTRY/online-boutique-currencyservice:latest
 
       # EMAILSERVICE
       - name: Build and Push Emailservice
         run: |
-          docker build -f src/emailservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-emailservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-emailservice:latest src/emailservice
           docker push $ECR_REGISTRY/online-boutique-emailservice:latest
 
       # FRONTEND
       - name: Build and Push Frontend
         run: |
-          docker build -f src/frontend/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-frontend:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-frontend:latest src/frontend
           docker push $ECR_REGISTRY/online-boutique-frontend:latest
 
       # PAYMENTSERVICE
       - name: Build and Push Paymentservice
         run: |
-          docker build -f src/paymentservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-paymentservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-paymentservice:latest src/paymentservice
           docker push $ECR_REGISTRY/online-boutique-paymentservice:latest
 
       # PRODUCTCATALOGSERVICE
       - name: Build and Push Productcatalogservice
         run: |
-          docker build -f src/productcatalogservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-productcatalogservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-productcatalogservice:latest src/productcatalogservice
           docker push $ECR_REGISTRY/online-boutique-productcatalogservice:latest
 
       # RECOMMENDATIONSERVICE
       - name: Build and Push Recommendationservice
         run: |
-          docker build -f src/recommendationservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-recommendationservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-recommendationservice:latest src/recommendationservice
           docker push $ECR_REGISTRY/online-boutique-recommendationservice:latest
 
       # SHIPPINGSERVICE
       - name: Build and Push Shippingservice
         run: |
-          docker build -f src/shippingservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-shippingservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-shippingservice:latest src/shippingservice
           docker push $ECR_REGISTRY/online-boutique-shippingservice:latest
 
       # SHOPPINGASSISTANTSERVICE
       - name: Build and Push Shoppingassistantservice
         run: |
-          docker build -f src/shoppingassistantservice/Dockerfile \
-          -t $ECR_REGISTRY/online-boutique-shoppingassistantservice:latest .
+          docker build -t $ECR_REGISTRY/online-boutique-shoppingassistantservice:latest src/shoppingassistantservice
           docker push $ECR_REGISTRY/online-boutique-shoppingassistantservice:latest
